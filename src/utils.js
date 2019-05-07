@@ -57,6 +57,26 @@ function removeChildrenFromProps(props) {
 }
 
 /**
+  * @name findReactRoot
+  * @param rootElSelector {String}
+  * @return HTMLElement
+  */
+
+export function findReactRoot(rootElSelector = undefined) {
+    const walker = document.createTreeWalker(document)
+
+    if (rootElSelector) {
+        return document.querySelector(rootElSelector)
+    }
+
+    while(walker.nextNode()) {
+        if (walker.currentNode.hasOwnProperty('_reactRootContainer')) {
+            return walker.currentNode
+        }
+    }
+}
+
+/**
   * @name verifyIfArraysMatch
   * @param macther Array - this is the Array that will be looped
   * @param verify Array - this is the Array to match against
