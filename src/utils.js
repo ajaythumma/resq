@@ -166,7 +166,7 @@ export function buildNodeTree(element) {
     }
 
     tree.name = getElementName(element.type)
-    tree.props = removeChildrenFromProps(element.memoizedProps)
+    tree.props = element.memoizedProps // do not remove children
     tree.state = getElementState(element.memoizedState)
 
     let { child } = element
