@@ -50,10 +50,13 @@ function removeChildrenFromProps(props) {
     }
 
     const returnProps = { ...props }
+    if (Array.isArray(returnProps.children)) {
+	    returnProps.__textNodes = returnProps.children.filter(child => typeof child === 'string')
+    }
+	
+	delete returnProps.children
+	return returnProps
 
-    delete returnProps.children
-
-    return returnProps
 }
 
 /**
@@ -166,7 +169,7 @@ export function buildNodeTree(element) {
     }
 
     tree.name = getElementName(element.type)
-    tree.props = element.memoizedProps // do not remove children
+    tree.props = removeChildrenFromProps(element.memoizedProps) // do not remove children
     tree.state = getElementState(element.memoizedState)
 
     let { child } = element
